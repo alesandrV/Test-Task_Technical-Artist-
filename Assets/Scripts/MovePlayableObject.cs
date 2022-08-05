@@ -28,11 +28,11 @@ public class MovePlayableObject : MonoBehaviour
     //Push oblect left and right
     private void PushHorizontal()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             rigidb.AddForce(new Vector3(-pushForce, 0f, 0f) * Time.deltaTime);
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A))
         {
             rigidb.AddForce(new Vector3(pushForce, 0f, 0f) * Time.deltaTime);
         }
@@ -41,7 +41,7 @@ public class MovePlayableObject : MonoBehaviour
     //Relize object with a torque
     private void PlayableObjectForceRotation()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && objectJoined)
+        if (Input.GetKey(KeyCode.Space) && objectJoined)
         {
             Destroy(sJoint);
             rigidb.AddTorque(transform.forward * torque);

@@ -9,14 +9,22 @@ public class GameController : MonoBehaviour
 
     private Animator cameraAnimator;
     private MovePlayableObject movePlayableObject;
+    private InitializeParticle initializeParticle;
+    private ScenesController scenesController;
 
     private float loadSceneDelay = 1.5f;
 
     private void Awake()
     {
-        mainCamera.GetComponent<Animator>().enabled = true;
-        mainPlayer.GetComponent<MovePlayableObject>().enabled = false;
-        
+        cameraAnimator = mainCamera.GetComponent<Animator>();
+        cameraAnimator.enabled = true;
+
+        movePlayableObject = mainPlayer.GetComponent<MovePlayableObject>();
+        movePlayableObject.enabled = true;
+
+        initializeParticle = mainPlayer.GetComponent<InitializeParticle>();
+
+        scenesController = gameObject.GetComponent<ScenesController>();
     }
 
     private void Update()
@@ -25,14 +33,14 @@ public class GameController : MonoBehaviour
         EnablePlayerMove();
         BackToMenu();
     }
-
+    
     //Allow camera to follow playable cylinder
     private void EnableCameraFollow()
     {
         if(mainCamera.transform.position.z >= 40f)
         {
             if (mainCamera)
-                mainCamera.GetComponent<Animator>().enabled = false;
+                cameraAnimator.enabled = false;
             else
                 Debug.LogError("Set the camera");
         }
@@ -44,16 +52,16 @@ public class GameController : MonoBehaviour
         if (mainCamera.transform.position.z >= 40f)
         {
             if (mainPlayer)
-                mainPlayer.GetComponent<MovePlayableObject>().enabled = true;
+                movePlayableObject.enabled = true;
             else
                 Debug.LogError("Set the object to play");
         }
     }
-
+    
     //Starting coroutine with back to menu logic
     private void BackToMenu()
     {
-        if (mainPlayer.GetComponent<InitializeParticle>().floorTouched)
+        if (initializeParticle.floorTouched)
         {
             StartCoroutine(BackToMenuAfterTime(loadSceneDelay));
         }
@@ -65,7 +73,7 @@ public class GameController : MonoBehaviour
         Debug.Log("Courutine started");
         yield return new WaitForSeconds(loadSceneDelay);
 
-        gameObject.GetComponent<ScenesController>().LoadScene("MenuScene");
+        scenesController.LoadScene("MenuScene");
     }
 
     void OnDisable()

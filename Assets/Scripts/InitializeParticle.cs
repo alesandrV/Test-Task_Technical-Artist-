@@ -9,11 +9,13 @@ public class InitializeParticle : MonoBehaviour
     private Transform particleGO;
     private MeshRenderer meshRenderer;
 
+    private void Awake()
+    {
+        meshRenderer = GetComponent<MeshRenderer>();
+    }
     private void Start()
     {
         particleGO = gameObject.transform.GetChild(0);
-
-        meshRenderer = GetComponent<MeshRenderer>();
     }
     void Update()
     {
